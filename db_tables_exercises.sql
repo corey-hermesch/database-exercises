@@ -18,11 +18,14 @@ CREATE TABLE `employees` (
 */
 /*
 Which table(s) do you think contain a numeric type column?
-- emp_no
+- dept_emp, dept_manager, salaries, titles
+
 Which table(s) do you think contain a string type column? 
-- first_name, last_name, gender?
+- departments, dept_emp, dept_manager, salaries, titles
+
 Which table(s) do you think contain a date type column?
-- birth_date, hire_date
+- ept_emp, dept_manager, salaries, titles
+
 What is the relationship between the employees and the departments tables?
 - It looks like the dept_emp table combines the emp_no from 
 - employees and the dept_no from departments (probably 
