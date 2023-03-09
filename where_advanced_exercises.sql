@@ -9,6 +9,7 @@ SELECT *
 FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
 ;
+-- Top 3 emp_no's are 10200, 10397, 10610
 
 -- 2. Find all employees as above but use or instead of in. 
 -- What is employee number of top 3 results? Does it match above?
@@ -73,6 +74,7 @@ SELECT *
 FROM employees
 WHERE birth_date LIKE '%12-25'
 ;
+-- Top 3: 10078, 10115, 10261
 
 -- 10. Find all employees hired in 90s and born on Christmas. List top 3
 SELECT *

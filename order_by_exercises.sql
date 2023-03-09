@@ -20,7 +20,7 @@ FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
 ORDER BY first_name, last_name
 ;
--- first row: Irena Ancton, last row: Vidya Zweizig
+-- first row: Irena Acton, last row: Vidya Zweizig
 
 -- 4. Find all employees I, V, M & order by last then first name
 -- what is first & last name in first/last row?
@@ -29,7 +29,7 @@ FROM employees
 WHERE first_name IN ('Irena', 'Vidya', 'Maya')
 ORDER BY last_name, first_name
 ;
--- First row: Irena Acton, last row: Maya Zydia
+-- First row: Irena Acton, last row: Maya Zyda
 
 -- 5. query for last name starts and ends with 'e'; sort by emp_no.
 -- How many employees are returned?
