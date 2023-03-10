@@ -70,7 +70,7 @@ ORDER BY birth_date, hire_date DESC
 -- Youngest employee hired first: Douadi Pettis
 
 /* 
-Exercise Goals
+Exercise Goals for function exercises:
     Copy the order by exercise and save it as functions_exercises.sql.
 */
 
@@ -104,9 +104,17 @@ WHERE hire_date LIKE '199%'
 
 -- Find the smallest and largest current salary from the salaries table.
 SHOW tables;
+-- first answer below. Incorrect because I didn't read the question very well.
+-- SELECT MIN(salary) AS min_salary, MAX(salary) AS max_salary
+-- FROM salaries
+-- ;
+-- Correct answer below
 SELECT MIN(salary) AS min_salary, MAX(salary) AS max_salary
 FROM salaries
+WHERE to_date > NOW()
 ;
+
+
 
 /*
     Use your knowledge of built in SQL functions to generate a username for all of the employees. A username should be all lowercase, and consist of the first character of the employees first name, the first 4 characters of the employees last name, an underscore, the month the employee was born, and the last two digits of the year that they were born. Below is an example of what the first 10 rows will look like:
@@ -135,7 +143,7 @@ SELECT LOWER (
            , '_'
            , SUBSTR(birth_date, 6, 2) -- 2-digit month
            , SUBSTR(birth_date, 3, 2) -- 2-digit year
-           )
+                )
 			 ) AS username
    , first_name 
    , last_name
@@ -144,5 +152,10 @@ FROM employees
 ;
 SHOW CREATE TABLE employees;
 SELECT MONTH(birth_date)
+FROM employees
+;
+
+-- DATE_FORMAT function below that could have combined two of the SUBSTR functions above.
+SELECT DATE_FORMAT(birth_date, '_%m%y') AS month_year
 FROM employees
 ;
