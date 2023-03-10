@@ -67,11 +67,8 @@ SELECT LOWER (
                 )
                          ) AS username
    , COUNT(*) AS u_username_count
-   , first_name 
-   , last_name
-   , birth_date
 FROM employees
-GROUP BY username, first_name, last_name, birth_date
+GROUP BY username
 ;
 
 -- 9.  From your previous query, are there any duplicate usernames? What is the higest number of times a username shows up? Bonus: How many duplicate usernames are there from your previous query?
@@ -86,15 +83,12 @@ SELECT LOWER (
                 )
 			) AS username
    , COUNT(*) AS username_count
---   , first_name 
---   , last_name
---   , birth_date
 FROM employees
-GROUP BY username -- , first_name, last_name, birth_date
+GROUP BY username 
 HAVING username_count > 1
 ORDER BY username_count DESC
 ;
--- YES, more than 1000 usernames are not distinct
+-- YES, more than 1000 usernames are not distinct. 6 is the highest number of duplicates
 -- Bonus below (with subquery), 13251 non-unique usernames
 SELECT COUNT(username) 
 FROM (

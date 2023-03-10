@@ -6,6 +6,7 @@ Bonus: More practice with aggregate functions:
 SHOW databases;
 USE employees;
 SHOW tables;
+
 SELECT emp_no, ROUND ( AVG(salary), 0) AS avg_salary
 FROM salaries
 GROUP BY emp_no
@@ -14,6 +15,7 @@ GROUP BY emp_no
 --  Using the dept_emp table, count how many current employees work in each department. The query result should show 9 rows, one for each department and the employee count.
 SELECT dept_no, COUNT(*) AS emp_count
 FROM dept_emp
+WHERE to_date > NOW()
 GROUP BY dept_no
 ;
 
@@ -46,9 +48,19 @@ FROM salaries
 GROUP BY emp_no
 ;
 
+-- Now find the max salary for each employee where that max salary is greater than $150,000.
+SELECT emp_no, MAX(salary) AS max_salary
+FROM salaries
+WHERE to_date > NOW()
+GROUP BY emp_no
+HAVING max_salary > 150000
+ORDER BY max_salary DESC
+;
 
-/*
-    Now find the max salary for each employee where that max salary is greater than $150,000.
-
-    Find the average salary for each employee where that average salary is between $80k and $90k.
-*/
+-- Find the average salary for each employee where that average salary is between $80k and $90k.
+SELECT emp_no, AVG(salary) AS avg_salary 
+FROM salaries
+GROUP BY emp_no
+HAVING avg_salary BETWEEN 80000 AND 90000 -- avg_salary >= 80000 AND avg_salary <= 90000
+ORDER BY avg_salary
+;
