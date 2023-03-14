@@ -12,8 +12,8 @@ RIGHT JOIN roles AS r ON u.role_id = r.id;
 
 -- 3. how many users of each role_id are there? 
 -- nn_cnt is correct because it does not count the null row where as the 
--- COUNT(*) does count the null row
-SELECT r.name, COUNT(*) AS cnt_of_users, SUM(!ISNULL(u.role_id)) AS nn_cnt
+-- COUNT(*) does count the null row.  OR count u.name like Andred did (below)
+SELECT r.name, COUNT(u.name) AS cnt_of_users, SUM(!ISNULL(u.role_id)) AS nn_cnt
 FROM users AS u
 RIGHT JOIN roles AS r ON u.role_id = r.id
 GROUP BY r.id;
@@ -50,12 +50,10 @@ ORDER BY Dept_Name
 -- 4. Find current titles of employees currently working in Customer Service
 SELECT * FROM departments;
 
-SELECT t.title, COUNT(e.emp_no) AS cnt_of_titles_in_cs
+SELECT t.title, COUNT(de.emp_no) AS cnt_of_titles_in_cs
 FROM titles as t
-JOIN employees as e
-  ON t.emp_no = e.emp_no
 JOIN dept_emp AS de
-  ON de.emp_no = e.emp_no
+  ON de.emp_no = t.emp_no
 JOIN departments AS d
   ON de.dept_no = d.dept_no
   WHERE (de.to_date > NOW()) 
@@ -90,12 +88,10 @@ ORDER BY Department_Name
 -- 6. Find number of current employees in each department
 SELECT d.dept_no
  , d.dept_name 
- , COUNT(e.emp_no) as num_employees
+ , COUNT(de.emp_no) as num_employees
 FROM dept_emp AS de
 JOIN departments AS d
   ON de.dept_no = d.dept_no
-JOIN employees AS e
-  ON de.emp_no = e.emp_no
 WHERE de.to_date > NOW()
 GROUP BY d.dept_no
 ;
@@ -112,6 +108,7 @@ WHERE de.to_date > NOW()
    AND s.to_date > NOW()    
 GROUP BY d.dept_name    
 ORDER BY avg_salary DESC
+LIMIT 1
 ;
 
 -- 8. Who is the highest paid employee in the Marketing department?
@@ -125,9 +122,10 @@ FROM salaries AS s
     ON d.dept_no = de.dept_no
   JOIN employees AS e
     ON e.emp_no = de.emp_no
-WHERE s.to_date > NOW()
+WHERE s.to_date > NOW() AND de.to_date > NOW()
   AND d.dept_name = 'Marketing'
 ORDER BY s.salary DESC 
+-- LIMIT 1
 ;
 
 -- 9. Which current dept manager has the highest salary?
@@ -184,6 +182,7 @@ ORDER BY combine.deprt_name, combine.empl_no
 
 -- 12. Bonus, Who is highest paid employee within each dept?
 
+USE employees;
 SELECT combine.deprt_name, combine.max_salary 
   , s.emp_no AS empl_no
   , CONCAT(e.first_name, ' ', e.last_name) AS full_name
