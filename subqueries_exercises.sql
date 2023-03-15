@@ -102,11 +102,11 @@ SELECT AVG(s.salary), STD(s.salary), MAX(s.salary)
 FROM salaries AS s
 ;
 
--- 78 salaries are within one std deviation of the max
--- .0027% of all salaries are within 1 std deviation of the max current salary
+-- 83 salaries are within one std deviation of the max
+-- .0029% of all salaries are within 1 std deviation of the max current salary
 SELECT COUNT(s.salary), (COUNT(s.salary) / (SELECT COUNT(salary) FROM salaries) * 100) AS percent_of_total
 FROM salaries AS s
-WHERE s.salary >= (SELECT (MAX(s.salary) - STD(s.salary)) FROM salaries AS s)
+WHERE s.salary >= (SELECT (MAX(s.salary) - STD(s.salary)) FROM salaries AS s WHERE s.to_date > NOW())
   AND s.to_date > NOW()
 ;
 
